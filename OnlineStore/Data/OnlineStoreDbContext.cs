@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OnlineStore.Models;
 
 namespace OnlineStore.Data
 {
@@ -8,5 +9,6 @@ namespace OnlineStore.Data
         {
             
         }
+        public DbSet<Product> Products {  get; set; }
     }
 }
