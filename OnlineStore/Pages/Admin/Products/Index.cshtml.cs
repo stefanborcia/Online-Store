@@ -9,14 +9,14 @@ namespace OnlineStore.Pages.Admin.Products
     {
         private readonly OnlineStoreDbContext _dbContext;
 
-        public List<Product> Products {  get; set; } = new List<Product>();
+        public List<Product> Products { get; set; } = new();
         public IndexModel(OnlineStoreDbContext dbContext)
         {
             _dbContext = dbContext;
         }
         public void OnGet()
         {
-            Products=_dbContext.Products.OrderByDescending(p=>p.Id).ToList();
+            Products = _dbContext.Products.OrderByDescending(p => p.Id).ToList();
         }
     }
 }
