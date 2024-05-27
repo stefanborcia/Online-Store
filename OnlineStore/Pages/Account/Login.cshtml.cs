@@ -8,7 +8,6 @@ namespace OnlineStore.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
-
         public LoginModel(SignInManager<IdentityUser> signInManager)
         {
             _signInManager = signInManager;

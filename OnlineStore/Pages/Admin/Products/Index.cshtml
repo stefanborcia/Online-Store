@@ -1,18 +1,26 @@
 ﻿@page
+@using Microsoft.AspNetCore.Identity
 @model OnlineStore.Pages.Admin.Products.IndexModel
+@inject UserManager<IdentityUser> UserManager
 @{
     ViewData["Title"] = "Products";
+    bool isAdminOrManager = false;
+
+    if (User.Identity.IsAuthenticated)
+    {
+        var user = await UserManager.GetUserAsync(User);
+        isAdminOrManager = await UserManager.IsInRoleAsync(user, "Admin") || await UserManager.IsInRoleAsync(user, "Manager");
+    }
 }
-@{
-}
+
 <h2 class="text-center mb-5">List of Product</h2>
 
 <div class="row mb-5">
     <div class="col">
-        <a class="btn btn-primary" href="/Admin/Products/Create">New Product</a>
-    </div>
-    <div class="col">
-
+        @if (isAdminOrManager)
+        {
+            <a class="btn btn-primary" href="/Admin/Products/Create">New Product</a>
+        }
     </div>
 </div>
 
@@ -28,7 +36,7 @@
         <th>Action</th>
     </tr>
 
-    @foreach(var product in Model.Products)
+    @foreach (var product in Model.Products)
     {
         <tr>
             <td>@product.Id</td>
@@ -36,11 +44,15 @@
             <td>@product.Brand</td>
             <td>@product.Category</td>
             <td>@(product.Price)€</td>
-            <td><img src="/product-images/@product.ImageFileName" width="100"/></td>
+            <td><img src="/product-images/@product.ImageFileName" width="100" /></td>
             <td>@product.CreateAt.ToString("MM/dd/yyyy")</td>
             <td style="white-space:nowrap">
-                <a class="btn btn-primary btn-sm" href="/Admin/Products/Edit?id=@product.Id">Edit</a>
-                <a class="btn btn-primary btn-sm" href="/Admin/Products/Delete?id=@product.Id">Delete</a>
+                <a class="btn btn-primary btn-sm" href="/Admin/Products/Details?id=@product.Id">Details</a>
+                @if (isAdminOrManager)
+                {
+                    <a class="btn btn-primary btn-sm" href="/Admin/Products/Edit?id=@product.Id">Edit</a>
+                    <a class="btn btn-primary btn-sm" href="/Admin/Products/Delete?id=@product.Id">Delete</a>
+                }
             </td>
         </tr>
     }

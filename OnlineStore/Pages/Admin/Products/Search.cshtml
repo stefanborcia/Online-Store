@@ -1,0 +1,39 @@
+﻿@page
+@model OnlineStore.Pages.Admin.Products.SearchModel
+@{
+    ViewData["Title"] = "Search Results";
+}
+
+<h2>Search Results</h2>
+
+@if (Model.Products == null || !Model.Products.Any())
+{
+    <div class="alert alert-warning">We don't have this product</div>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Brand</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Image</th>
+            <th>Created At</th>
+        </tr>
+
+        @foreach (var product in Model.Products)
+        {
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.Name</td>
+                <td>@product.Brand</td>
+                <td>@product.Category</td>
+                <td>@(product.Price)€</td>
+                <td><img src="/product-images/@product.ImageFileName" width="100" /></td>
+                <td>@product.CreateAt.ToString("MM/dd/yyyy")</td>
+            </tr>
+        }
+    </table>
+}

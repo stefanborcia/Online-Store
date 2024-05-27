@@ -15,13 +15,6 @@ builder.Services.AddDbContext<OnlineStoreDbContext>(options =>
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<OnlineStoreDbContext>()
     .AddDefaultTokenProviders();
-
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
-    {
-        options.LoginPath = "/Pages/Login";
-        options.LogoutPath = "/Pages/Logout";
-    });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
