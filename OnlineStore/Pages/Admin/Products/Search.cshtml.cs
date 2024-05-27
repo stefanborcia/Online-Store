@@ -15,20 +15,28 @@ namespace OnlineStore.Pages.Admin.Products
             _dbContext = dbContext;
         }
 
-        public List<Product> Products { get; set; }
+        public IList<Product> Products { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string search)
+        [BindProperty(SupportsGet = true)]
+        public string Search { get; set; }
+
+        public IActionResult OnGet()
         {
-            if (string.IsNullOrEmpty(search))
+            if (string.IsNullOrWhiteSpace(Search))
             {
-                Products = new List<Product>();
+                TempData["Message"] = "Search field can not be empty.";
+                return Page();
             }
-            else
+
+            Products = _dbContext.Products
+                .Where(p => p.Name.Contains(Search))
+                .ToList();
+
+            if (!Products.Any())
             {
-                Products = await _dbContext.Products
-                    .Where(p => p.Name.Contains(search))
-                    .ToListAsync();
+                TempData["Message"] = "No products found.";
             }
+
             return Page();
         }
     }

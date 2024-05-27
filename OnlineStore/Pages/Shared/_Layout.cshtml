@@ -24,7 +24,7 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <form class="d-flex mx-auto" method="get" action="/Admin/Products/Search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" required>
                         <button class="btn btn-outline-primary" type="submit">Search</button>
                     </form>
                     @if (User.Identity.IsAuthenticated)
